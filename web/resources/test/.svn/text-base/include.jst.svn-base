@@ -1,6 +1,0 @@
-<% this.include( "helper.js" ); %>
-<html>
-<body>
-      <h1><%= Helper.doSomethingHelpful("Georgia Tech") %></h1>
-</body>
-</html>
