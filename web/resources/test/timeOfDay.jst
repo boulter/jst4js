@@ -1,0 +1,26 @@
+<@ count, today @>
+
+<% this.collectContentFor("leftMenu", function() { %>
+    <p>
+        Watch me count:
+        <ul>
+            <% for( var i = 1; i <= count; i++ ) { -%>
+                <li><%= i %></li>
+            <% } -%>
+        </ul>
+    </p>
+<% } ); -%>
+
+<% this.collectContentFor("mainContent", function() { %>
+    <h1>Hello <%= request.getParameter("name") %>.</h1>
+    <p>The time is <%= today %></p>
+    <p>
+        <ul>
+        <% for( var i in this ) { -%>
+            <li><%= i %></li>
+        <% } -%>
+        </ul>
+    </p>
+<% } ); -%>
+
+<% this.layout( 'layout.jst' ); -%>

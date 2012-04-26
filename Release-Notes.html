@@ -1,0 +1,42 @@
+<html>
+<body>
+    <h1>Release Notes</h1>
+
+    <h3>Release 1.3</h3>
+    <ul>
+        <li>
+            Added the Template.scripts() and Template.styles() methods for
+            allowing partials to add dependencies on CSS and client Javascript
+            paths for HTML templates.
+        </li>
+        <li>
+            Updated the Shell so it removes the bottom Text box, and behaves more
+            like a shell you'd expect to see.
+        </li>
+        <li>
+            Refactored Template.collectContentFor() to handle multiple calls to
+            collectContentFor() the resulting function will concatenate them
+            together.
+        </li>
+    </ul>
+    <h3>Release 1.2</h3>
+    <ul>
+        <li>
+            Added support for treating instances of java.util.* as native Javascript types.
+        </li>
+        <li>
+            Added support for templates to declare the input parameters to their template.  It
+            simplifies all Templates both the top level template and partials you might call
+            so they all behave the same way.  All templates have formal parameters just like
+            functions.
+        </li>
+        <li>
+            Also allow for layout definitions to be included within the template itself.
+        </li>
+        <li>
+            Updated Emailer to have support for specifying the username and password in
+            spring configuration directly instead of through javamail properties.
+        </li>
+    </ul>
+</body>
+</html>

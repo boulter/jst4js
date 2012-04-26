@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/40/trunk/src
+END
+.DS_Store
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/2/trunk/src/.DS_Store
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/30/trunk/src/log4j.properties
+END

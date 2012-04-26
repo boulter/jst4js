@@ -1,0 +1,88 @@
+<@ ex @>
+
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #e6f2f3;
+    background: -moz-linear-gradient( top, #005778, #e6f2f3 );
+    background: -webkit-gradient( linear, left top, left bottom, from(#005778), to(#e6f2f3) );
+}
+
+.errorLine {
+    background-color:#ff0000;
+    color: #ffffff;
+}
+.output {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #999999;
+    background: #ffffff;
+    display: table;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.jstTable .even {
+    background: #eeeeee;
+}
+
+.jstTable .odd {
+    background: #dddddd;
+}
+
+.jstTable {
+    margin: auto;
+    border-collapse:collapse;
+    border: 1px solid #999999;
+}
+
+.jstTable td {
+    padding: 0px 5px;
+    white-space: pre;
+}
+</style>
+</head>
+<body>
+<div class="output">
+<% var i = 1, errorLineNumber = ex.getTemplateLineNumber(); %>
+<h3><%= ex.getMessage() %></h3>
+Template: <%= ex.getTemplate().getURL() %><br/>
+<p>
+<table class="jstTable">
+<% var lines = ex.getTemplate().toString().split("\n"); %>
+<% for each( var j = 0; j < lines.length; j++ ) { %>
+    <% if( i == errorLineNumber ) { %>
+        <tr class='errorLine'>
+    <% } else { %>
+        <tr class="<%= i % 2 == 0 ? 'even' : 'odd' %>">
+    <% } %>
+    <td><%= i %></td><td><%= ('' + lines[j]).html() %></td>
+    </tr>
+    <% i++; -%>
+<% } -%>
+</table>
+</p>
+<p>
+
+<% i = 1; %>
+<table class="jstTable">
+<% var lines = ex.getTemplate().getGeneratedSource().split("\n"); %>
+<% for each( var j = 0; j < lines.length; j++ ) { %>
+    <% if( i == ex.getScriptLineNumber() ) { %>
+        <tr class='errorLine'>
+    <% } else { %>
+        <tr class="<%= i % 2 == 0 ? 'even' : 'odd' %>">
+    <% } %>
+    <td><%= i %></td><td><%= ('' + lines[j]).html() %></td>
+    </tr>
+    <% i++; -%>
+<% } -%>
+</table>
+</p>
+
+</body>
+</html>

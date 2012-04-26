@@ -1,0 +1,13 @@
+<@ name, age, title @>
+
+Hello my name is <%= name %>.  I'm <%= age %> years old.  I quit my job for
+a job at a startup, and I think I made a mistake.  Not for quitting, but just not
+the right place.  I think everyone here is crazy!  I just don't know what happened.
+
+<% for( var i = 1; i <= name.length; i++ ) { -%>
+   <%= name.substring( 0, i ) %>
+<% } -%>
+
+Can this get any better?
+
+<%= name %> <%= title %>

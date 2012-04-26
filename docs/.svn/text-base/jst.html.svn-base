@@ -1,0 +1,848 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>JST Documentation</title>
+    <link rel='stylesheet' type='text/css' href='jst.css'/>
+</head>
+<body>
+    <p>
+        JavasScript Templates (JST) is a templating technology for Java applications
+        based on Javascript.  It's very similiar to Velocity or Freemarker, but it is much
+        more powerful and feature rich than those libraries.  Jst4j gives you powerful re-use
+        of scripts, reusable layouts, utility methods, no new syntax rules, security,
+        transparent escaping for HTML/XML, and many more advantages over other template
+        solutions for Java.
+    </p>
+
+    <h2>Philosophy</h2>
+    <p>
+        All technology has a philosophy behind it.  Somehow the author is
+        saying at one level or another "This is how I would solve this problem, and here
+        is what matters and this other stuff doesn't."  All technology is an embodiment of
+        philosophy, and so we generally choose technology based on their philosophies.
+        I wrote this library mainly after constant frustration with JSP and worse JSP tags.
+        I've never bought the argument for banishing Java code from JSP.  It was never an
+        issue of the use of Java, but an issue of abstraction and resynthesis - in a word reuse.
+        JSP was in need of help, but it was really about being able to decompose portion of 
+        a page into reusable pieces that you could pass parameters between.  Just like a
+        method or function in your programming language.  JSP was too isolated from the
+        controller and model, and this produced the environment that lead to people putting
+        too much Java code in their view because they didn't have any other choice.
+    </p>
+    <p>
+        Almost every other web technology utilizes a turing complete language (PHP,
+        eRuby, ASP) as their template language, and they don't seem to have any the problems
+        JSP Tags were supposed to solve.  But, even if JSP tags were on the right track it
+        created a huge canyon between view code and Java code.  Making it very difficult
+        to create small utility methods for the view.  Not to mention different syntax,
+        rules which as web developers we have plenty to learn (CSS, HTML, Javascript,
+        Actionscript, XML, etc).
+    </p>
+
+    <p>
+        Furthermore, JSP is targeted at delivery over HTTP only.  Say you want to generate
+        XML, an email, etc.  JSP won't work unless you serving that output over HTTP.  There
+        are many other opportunities where templating is needed.
+    </p>
+
+    <p>
+        I hope you will begin to see how antiquated and overburndened JSP has become.  And,
+        how template languages like Velocity and Freemarker were on the right track, but
+        stopped too short of providing the right tools you need as a developer.  Jst4j
+        gives you access to the tools and techniques modern applications demand.
+    </p>
+
+
+    <h2>Out Of the Box with HTML</h2>
+
+    <p>
+        Most people will be using JST as a replacement for JSP, velocity, or freemarker in
+        their web tier so for the first part I want to show you how to use this out of the
+        box for generating HTML responses over HTTP.  Later I'll show you how JST can be
+        integrated as a library to anything.  Enough talk let's get started.
+    </p>
+
+    <h3>Installing the Servlet Filter</h3>
+
+    <p>
+        Adding JST to your web application only requires registering the JST servlet filter.
+        Here is an example of how you'd do that:
+    </p>
+
+    <blockquote class="xml">
+<a name="line1"> 1</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">filter</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line2"> 2</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">filter-name</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>jst<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/filter-name</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line3"> 3</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">filter-class</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>jst.http.JavascriptFilter<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/filter-class</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line4"> 4</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/filter</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line5"> 5</a>
+<a name="line6"> 6</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">filter-mapping</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line7"> 7</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">filter-name</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>jst<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/filter-name</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line8"> 8</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">url-pattern</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>*.jst<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/url-pattern</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line9"> 9</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">dispatcher</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>FORWARD<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/dispatcher</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line10">10</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">dispatcher</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>INCLUDE<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/dispatcher</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line11">11</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/filter-mapping</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+    </blockquote>
+
+    <p>
+        The first portion adds the JavascriptFilter class to your web application,
+        and the mapping sends all requests dispatched as includes or forwards to
+        anything ending in *.jst to this filter.  Using the jst file suffix is
+        important when you are writing your jst templates.
+    </p>
+
+    <h3>Writing your first template</h3>
+
+    <p>
+        Let's make a template so create a hello.jst file in your web application.
+        Add the following to hello.jst:
+    </p>
+
+    <blockquote class="jst">
+Hello JST world!  It's me &lt;%= request.getParameter("name") %&gt;.
+    </blockquote>
+
+    <p>
+        So pretty simple right? This demonstrates a couple of things about
+        JST.  So try hitting <a href="http://localhost:8080/hello.jst?name=chuck">this
+        url</a> to see the template execute.  Provided your template is at the root
+        of web server it should work.  And at a high level it would print out
+        the following.
+    </p>
+
+    <blockquote class="jst">
+Hello JST world!  It's me chuck.
+    </blockquote>
+
+    <p>
+        First is the &lt;%= %&gt; tags.  These tags are called scriptlets.  Scriptlets
+        designates code that will be evaluated when this template runs.  The
+        &lt;%= request.getParameter("name") %&gt; takes the output from the expression
+        and puts it into HTML.  In this case it's take the value of the request parameter
+        called name, and putting it into the HTML.
+    </p>
+
+    <p>
+        The second thing this demonstrates is how easily the Javascript code can
+        call and use Java objects.  The request object is HttpServletRequest that you have
+        access to in your servlet.  Objects request and response are automatically
+        defined for all templates and allow access to HttpServletRequest and
+        HttpServletResponse respectively.  You can see calling methods on Java
+        objects is effortless, and looks remarkably like invoking any other method
+        in Javascript.  There are some differences between Javascript and Java that you
+        must understand, but for right now they are not that important.
+   </p>
+
+    <h3>More on Scripting</h3>
+
+    <p>
+        Let's do something more interesting.  Let's explore more of JST.  Here is
+        our next script:
+    </p>
+
+    <blockquote class="jst">
+&lt;% var names = [ "chuck", "chaz", "chuckles", "chucky", "bill", "jim" ]; %&gt;
+
+Names that start with "CH":
+
+&lt;% var results = names.filter( function( item ) { return item.indexOf("ch") == 0; } -%&gt;
+&lt;ul&gt;
+&lt;% results.forEach( function( item ) { -%&gt;
+    &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
+&lt;% } -%&gt;
+&lt;/ul&gt;
+    </blockquote>
+
+    <p>
+        Ok so we have jumped to light speed now.  We are processing several new things at
+        once, but I am sure you can handle it.  The first line defines an array of names.
+        Notice that this scriptlet tag is missing the equal sign.  That's because the
+        code inside is a complete statement.  See scriptlets come in two varieties
+        expressions, and statements.  Expressions evaluate to a value and that value is
+        written to the HTML.  In other words expression are something that the user will
+        produce results the user will see.  Statements are invisible, and don't directly
+        produce output in the HTML.  They do more work or the behind the scenes heavy
+        lifting.
+    </p>
+
+    <p>
+        The next couple of lines produce static output.  So let's jump on down to the
+        next scriptlet tag.  What's going on here?  At a high level we're writing out
+        all the names that start with the letters "ch".  How does it do this?  The first
+        method call filter() iterates over the names array and calls the anonymous
+        function on each element of the array.  If that function returns true then that
+        element will be returned in the results array.  The next scriptlet uses the forEach()
+        function to iterate over the results array and calls another anonymous function for
+        each element in the array.  Notice how this anonymous function mixes code
+        and scriptlets.  In this case we're taking each member of the array and surrounding
+        it with &lt;li&gt; tags.
+    </p>
+
+    <p>
+        Lastly, notice that some of the statement scriptlets end with -%&gt; rather than
+        %&gt;.  Scriptlet tags ending in -%&gt; will erase any whitespace after them.  This
+        allows the statement scriptlet to really be invisible in the output.  Removing
+        unnecessary new lines, this is very helpful when using JST outside of HTML say
+        to create plain text emails.
+    </p>
+
+    <p>
+        Now this template doesn't actually do anything useful, but interesting is the methods
+        we're using.  The methods filter() and forEach() are apart of Javascript 1.6
+        which most browsers do not yet support.  So while you can't use those on the client
+        JST can take advantage of new changes to the language when they are ready.  You
+        don't have to worry about market penetration.
+    </p>
+
+    <h3>Real World JST</h3>
+
+    <p>
+        Up till now you might want to call me a liar.  What we've discussed is roughly the
+        exact same thing you get with JSP.  This doesn't hold any new advantages over JSP.
+        Typically, you would want to use a servlet or a controller to process requests
+        coming in then forward the results to a JST template to produce the results.  Let's
+        write a quick servlet that forwards to our JST template to render the view.
+    </p>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">1</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">TestJSTServlet&nbsp;</font><font color="#7f0055"><b>extends&nbsp;</b></font><font color="#000000">HttpServlet&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">2</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">3</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">doGet</font><font color="#000000">(</font><font color="#000000">HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">ServletException,&nbsp;IOException&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">4</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">5</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateDispatcher</font><font color="#000000">(&nbsp;</font><font color="#000000">request,&nbsp;response&nbsp;</font><font color="#000000">)</font><font color="#000000">.forward</font><font color="#000000">(</font><font color="#2a00ff">&#34;hello.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">6</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
+<font color="#808080">7</font>&nbsp;<font color="#000000">}</font>
+    </code>
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+<!--
+public class TestJSTServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        new TemplateDispatcher( request, response ).forward("hello.jst");
+    }
+}
+-->
+
+
+    <p>
+        This simply forwards the servlet's output to a javascript template named: hello.jst.
+        The TemplateDispatcher is the main class used to interact between outside Servlet
+        and a template.  Let's see some more compelling examples.
+    </p>
+
+    <h3>Adding Layouts</h3>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">TestJSTServlet&nbsp;</font><font color="#7f0055"><b>extends&nbsp;</b></font><font color="#000000">HttpServlet&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">02</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">doGet</font><font color="#000000">(</font><font color="#000000">HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">ServletException,&nbsp;IOException&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">04</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Date&nbsp;today&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Date</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">06</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateDispatcher</font><font color="#000000">(&nbsp;</font><font color="#000000">request,&nbsp;response&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.exposeVariable</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;time&#34;</font><font color="#000000">,&nbsp;today&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.forward</font><font color="#000000">(</font><font color="#2a00ff">&#34;timeOfDay.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
+<font color="#808080">11</font>&nbsp;<font color="#000000">}</font></code>
+
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+<!--
+public class TestJSTServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Date today = new Date();
+
+        new TemplateDispatcher( request, response )
+            .exposeVariable( "time", today )
+            .forward("timeOfDay.jst");
+    }
+}
+-->
+
+    <p>
+        So this is something that's very difficult to do with JSP.  Here we are sharing data
+        created in our servlet with our JST template.  What the exposeVariable() method does
+        is binds an object (the second parameter) as a named variable in the template
+        (first parameter).  You can expose as many variables as you wish by calling that
+        method multiple times.  This allows you to separate your business logic from your
+        view logic.  Let's go further.
+    </p>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">TestJSTServlet&nbsp;</font><font color="#7f0055"><b>extends&nbsp;</b></font><font color="#000000">HttpServlet&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">02</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">doGet</font><font color="#000000">(</font><font color="#000000">HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">ServletException,&nbsp;IOException&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">04</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Date&nbsp;today&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Date</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">06</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateDispatcher</font><font color="#000000">(&nbsp;</font><font color="#000000">request,&nbsp;response&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.exposeVariable</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;time&#34;</font><font color="#000000">,&nbsp;today&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.layout</font><font color="#000000">(</font><font color="#2a00ff">&#34;two_column.jst&#34;</font><font color="#000000">)</font><br />
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.forward</font><font color="#000000">(</font><font color="#2a00ff">&#34;timeOfDay.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
+<font color="#808080">12</font>&nbsp;<font color="#000000">}</font></code>
+
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+
+<!--
+public class TestJSTServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Date today = new Date();
+
+        new TemplateDispatcher( request, response )
+            .exposeVariable( "time", today )
+            .layout("two_column.jst")
+            .forward("timeOfDay.jst");
+    }
+}
+-->
+
+    <p>
+        Now we've added a layout to our timeOfDay.jst template.  In this case the two_column.jst
+        is combined with the results from timeOfDay.jst to render the entire HTML returned.
+        The layout allows to you put common portions of your HTML page into a single reusable
+        file that can be applied to many different files.  This radically simplifies creating
+        a common layout.  Something that JSP makes very hard.  Let's look at the JST associated
+        with both of these.  Let's look at the two_column.jst first.
+    </p>
+
+    <blockquote class="jst">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;head&gt;
+    &lt;meta http-equiv="content-type" content="text/html; charset=iso-8859-1" /&gt;
+    &lt;style&gt;
+        html {
+          padding:0px;
+          margin:0px;
+        }
+        .menu {
+          float: left;
+          width: 20%;
+          background-color: #ff99CC;
+          overflow: auto;
+          padding: 1em;
+        }
+
+        .rightContent {
+          float: left;
+          width: 70%;
+          background-color: #fff;
+          margin:0px 0px 50px 0px;
+          overflow: auto;
+          padding: 2em;
+        }
+    &lt;/style&lt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;div class="menu"&gt;
+            <span class="highlight">&lt;% this.leftMenu() %&gt;</span>
+        &lt;/div&gt;
+
+        &lt;div class="rightContent"&gt;
+            <span class="highlight">&lt;% this.mainContent() %&gt;</span>
+        &lt;/div&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;
+    </blockquote>
+
+    <p>
+        Here is a very simple example of a two column layout where the left and right hand sides are
+        defined in other files.  The place holders for those portions are the two function calls in the
+        scriptlet tags.  Now let's see how timeOfDay.jst defines the content of each of these.
+    </p>
+
+    <blockquote class="jst">
+<span class="highlight">&lt;% <strong>this</strong>.collectContentFor(<font color="#008000">&quot;leftMenu&quot;</font>, function() <font color="4444FF"><strong>{</strong></font> %&gt;</span>
+    &lt;p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="/home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/contact"&gt;Contact Us&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/gallery"&gt;Gallery&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/p&gt;
+<span class="highlight">&lt;% } ); %&gt;</span>
+
+<span class="highlight">&lt;% this.collectContentFor("mainContent", function() { %&gt;</span>
+    &lt;p&gt;The time is &lt;%= today %&gt;&lt;/p&gt;
+<span class="highlight">&lt;% } ); %&gt;</span>
+    </blockquote>
+
+    <p>
+        Now this shows how to define sections of content that can be added to the layout defined.  In
+        the example above a call to collectContentFor() methods allows you to create a function that
+        renders the given content.  The first parameter you'll notice is the name for that function,
+        the second parameter is the function definition.  Here you'll see we created two functions.
+        One called leftMenu and the other called mainContent.  You'll also see those function names
+        used in the layout we saw above.
+    </p>
+
+    <p>
+        You may choose to put your layout calls inside your jst files by using the this.layout(url) method.
+        This allows you to encapsulate the layout choice in the view and away from the controller.
+        However, you might have to repeat layout definitions across multiple views.  It is up to you.
+    </p>
+
+    <h3>Rendering Partial Templates</h3>
+
+    <p>
+        One thing that's very important is the ability to create parts of templates that can be reused
+        in lots of different files.
+    </p>
+
+    <blockquote class="jst">
+&lt;%= this.render( "partial", { foo: "SomeMethod", bar: 3, baz: 34 } ) %&gt;
+    </blockquote>
+
+    The template above puts the output from the template named "partial" into that template's output.  It acts
+    very much like a function call that returns a String.  In this case "partial" template is given three
+    parameters named foo, bar, and baz.  These are exposed as variables the partial template can access
+    directly.  This allows for parametrized output of your partial templates.
+
+    <h3>Includes</h3>
+
+    <p>
+        Includes are another method for separating code into reusable files.  This makes reusing code
+        very easy.  Lots of frameworks make it difficult to create view utility methods.  While you
+        can separate business logic you still need lots of methods specifically for handling view logic.
+    </p>
+
+    <blockquote class="jst">
+&lt;% this.include("html.js"); %&gt;
+
+&lt;%= Html.link( "/calculate", "Click Here" ) %&gt;
+    </blockquote>
+
+    <p>
+        Here is an example of a jst template that includes the html script file.  In this example, we're
+        including one of the scripts shipped with JST.  Here we're creating a href in our HTML.  You can
+        include any script you want.  You can create your own javascript files and include them using
+        the include method on the template object.  The path to your script is relative to your template
+        you are executing.
+    </p>
+
+    <p>
+        Here's another example creating your own javascript function.
+    </p>
+
+    <blockquote class="jst">
+&lt;% this.include( "helper.js" ); %&gt;
+&lt;html&gt;
+&lt;body&gt;
+      &lt;h1&gt;&lt;%= Helper.doSomethingHelpful("Georgia Tech") %&gt;&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+    </blockquote>
+
+    <p>
+        In this example we're including the helper.js file, and calling a function included within it.  Here
+        is the code for helper.js
+    </p>
+
+    <blockquote class="jst">
+var Helper = {
+    doSomethingHelpful: function ( team ) {
+        return "{0} wins the national championship!".format( team );
+    }
+};
+    </blockquote>
+
+    <p>
+        Here you can see helper is using the String.format() method defined by the jst.js file which
+        is automatically included in every template.
+    </p>
+
+    <h3>Mixins</h3>
+
+    <p>
+        Mixins are a unique way of adding methods directly into your templates.  You can mixin
+        Java objects directly into your template.  This is handy to create helper functions for all
+        of your templates, and integrate directly with Java.  Here is an example:
+    </p>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">TestJSTServlet&nbsp;</font><font color="#7f0055"><b>extends&nbsp;</b></font><font color="#000000">HttpServlet&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">02</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">doGet</font><font color="#000000">(</font><font color="#000000">HttpServletRequest&nbsp;request,&nbsp;HttpServletResponse&nbsp;response</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">ServletException,&nbsp;IOException&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">04</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Date&nbsp;today&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">Date</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">06</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateDispatcher</font><font color="#000000">(&nbsp;</font><font color="#000000">request,&nbsp;response&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">08</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.exposeVariable</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;time&#34;</font><font color="#000000">,&nbsp;today&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.mixin</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;timeUtility&#34;</font><font color="#000000">,&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TimeUtility</font><font color="#000000">(&nbsp;</font><font color="#000000">today&nbsp;</font><font color="#000000">)&nbsp;)</font><br />
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.forward</font><font color="#000000">(</font><font color="#2a00ff">&#34;timeOfDay.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">11</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
+<font color="#808080">12</font>&nbsp;<font color="#000000">}</font></code>
+
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+<!--
+public class TestJSTServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Date today = new Date();
+
+        new TemplateDispatcher( request, response )
+            .exposeVariable( "time", today )
+            .mixin( "timeUtility", new TimeUtility( today ) )
+            .forward("timeOfDay.jst");
+    }
+}
+-->
+
+    <p>
+        In this example we've added a mixin called TimeUtility.  The methods on TimeUtility will be
+        exposed to our template as plain old methods on it.  The first parameter is a unique name
+        given to our mixin.  The user doesn't really use this to access the mixin methods.
+    </p>
+
+    <h3>Spring MVC Integration</h3>
+
+    <p>
+        It's great that we can use JST templates from plain old servlets making it available to
+        a broad audience, but most modern web development is done outside of the plain old servlet
+        framework.  Particularly, the rise of Spring and technologies based on Spring is now the
+        new defacto standard of development.  Good news is that JST is integrated into Spring and
+        Spring MVC out of the box.
+    </p>
+
+    <p>
+        Jst4J includes ready made ViewResolver for Spring MVC called JstViewResolver.  Let's
+        configure JstViewResolver in our Spring files.  Here is a simple example:
+    </p>
+
+    <blockquote class="xml">
+<a name="line1"> 1</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">bean</font> <font color="#2040a0">class=</font><font color="#008000">&quot;jst.spring.JstViewResolver&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line2"> 2</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">property</font> <font color="#2040a0">name=</font><font color="#008000">&quot;templates&quot;</font> <font color="#2040a0">ref=</font><font color="#008000">&quot;tempaltes&quot;</font><font color="#2040a0">/</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line3"> 3</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/bean</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line4"> 4</a>
+<a name="line5"> 5</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">bean</font> <font color="#2040a0">id=</font><font color="#008000">&quot;templates&quot;</font> <font color="#2040a0">class=</font><font color="#008000">&quot;jst.spring.JavascriptTemplateBean&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line6"> 6</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">property</font> <font color="#2040a0">name=</font><font color="#008000">&quot;resourcePaths&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line7"> 7</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">list</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line8"> 8</a>             <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>/WEB-INF/templates<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line9"> 9</a>             <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>/javascript<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line10">10</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/list</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line11">11</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/property</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line12">12</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/bean</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+    </blockquote>
+    <!--
+    <bean class="jst.spring.JstViewResolver">
+        <property name="templates" ref="tempaltes"/>
+    </bean>
+
+    <bean id="templates" class="jst.spring.JavascriptTemplateBean">
+        <property name="resourcePaths">
+            <list>
+                <value>/WEB-INF/templates</value>
+                <value>/javascript</value>
+            </list>
+        </property>
+    </bean>
+    -->
+
+    <p>
+        First thing is to configure the JstViewResolver instance which is the first bean
+        in the configuration.  It requires a JavascriptTemplateBean instance so it knows
+        where your templates will be stored in your application.  In this example, I've
+        configured two locations.  One under /WEB-INF/templates and another under the
+        /javascript directory.  The /javascript directory is where I keep client side
+        scripts so it's publicly visible.  The other is under WEB-INF so it's private.
+    </p>
+    <p>
+        What this allows me to do is keep my jst templates under WEB-INF, but share some
+        plain old javascript files between the client and the server.  These might be
+        simple utility methods for manipulating strings, numbers, etc.  Keep in mind
+        your server side javascript environment is NOT the same as your browser
+        environment.  Things like DOM model for the document, certain global variables like window,
+        are not valid in JST templates.  But, you can still share code if it shares
+        commonalities between your client and server.
+    </p>
+
+    <p>
+        Why the separation between JstViewResolver and JavascriptTemplateBean?  By
+        separating the two objects I can share templates between the web side, and
+        non-web side within one application while sharing my template configuration
+        between them.  For example, say I wanted to use JST templates for my web pages,
+        AND emails I might send out.  You can do that within one application.
+    </p>
+
+    <h3>Using JST outside of the Web</h3>
+
+    <p>
+        As mentioned before Jst4J is not married to the web like JSP.  It's flexible
+        and portable among many different types of applications.  Let's look at how
+        we can use Jst4J templates in a plain old java program.
+    </p>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">01</font>&nbsp;<font color="#7f0055"><b>public&nbsp;class&nbsp;</b></font><font color="#000000">EmbedTemplateTest&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">02</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;static&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">main</font><font color="#000000">(</font><font color="#000000">String</font><font color="#000000">[]&nbsp;</font><font color="#000000">args</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">IOException&nbsp;</font><font color="#000000">{</font><br />
+<font color="#808080">04</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">TemplateContext&nbsp;context&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateContext</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">context.addLoader</font><font color="#000000">(&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">FileTemplateLoader</font><font color="#000000">(&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">File</font><font color="#000000">(</font><font color="#2a00ff">&#34;./test&#34;</font><font color="#000000">)&nbsp;)&nbsp;)</font><font color="#000000">;</font><br />
+<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">ScriptRuntime&nbsp;runtime&nbsp;=&nbsp;context.load</font><font color="#000000">(</font><font color="#2a00ff">&#34;/embedded-test.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Object&nbsp;output&nbsp;=&nbsp;runtime.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;name&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;Charlie&#34;</font><font color="#000000">)</font><font color="#000000">.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;age&#34;</font><font color="#000000">,&nbsp;</font><font color="#990000">31</font><font color="#000000">)</font><font color="#000000">.invoke</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">08</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">System.out.println</font><font color="#000000">(&nbsp;</font><font color="#000000">output&nbsp;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
+<font color="#808080">11</font>&nbsp;<font color="#000000">}</font></code>
+
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+<!--
+public class EmbedTemplateTest {
+
+    public static void main(String[] args) throws IOException {
+        TemplateContext context = new TemplateContext();
+        context.addLoader( new FileTemplateLoader( new File("./test") ) );
+        ScriptRuntime runtime = context.load("/embedded-test.jst");
+        Object output = runtime.addVariable("name", "Charlie").addVariable("age", 31).invoke();
+
+        System.out.println( output );
+    }
+}
+-->
+
+    <p>
+        In this quick example we create a TemplateContext object.  The TemplateContext
+        object is a long living object.  Typically, the life of your program is the life
+        of this object.  It is responsible for loading templates and caching them.  It
+        supports compiling known scripts for performance and keeping those scripts in
+        memory so that you don't have to reload those objects over.  When it's not in
+        production, which is the default mode, it will reload scripts when it sees their
+        date changes.  When it's in production it skips this check to boost performance.
+    </p>
+
+    <p>
+        The next thing it does is register a TemplateLoader with the TemplateContext.
+        TemplateLoaders are responsible for the details of finding scripts and loading
+        them for the TemplateContext.  You can have as many TemplateLoaders as you wish
+        so you can support pulling scripts from many locations.
+    </p>
+
+    <p>
+        The next line loads a template by calling context.load() method.  The return type
+        is a ScriptRuntime.  ScriptRuntime instances are specific to the execution
+        of this script.  ScriptRuntime's job is to allow you add object's into the
+        script's environment before you invoke it.  This allows you to register Java
+        instances you'd like available to the script, or add other Javascript code by
+        default into the script.  <b>Note</b>: Your scripts can request some other code be included
+        using the include() method.  This is the preferred way to include dependant Javascript
+        files needed by your script because it's much more flexible.  Doing it in Java code
+        creates dependency between your Java code and your specific script you are invoking.
+        It's better to allow the script to declare these dependencies.  However, if you are
+        creating a framework like environment for your scripts then you can do so in Java code.
+    </p>
+
+    <p>
+        The next line does several things before calling the invoke() method.  It adds
+        two variables from Java and registers them with variable names <i>name</i> and
+        <i>age</i>.  This allows our JST file to simply refer to these variables.  Finally,
+        it calls invoke() to render the template, and prints the output.
+    </p>
+
+    <h3>Jst4J and Email</h3>
+
+    <p>
+        Email is another area where it would be nice to use something like JST to substitute
+        in parameters much like we do for our web pages.  Good news Jst4J comes with a
+        package out of the box for doing integration with Javamail.  Let's look at how
+        we can configure Spring context with our Emailer class:
+    </p>
+
+    <blockquote class="xml">
+<a name="line1"> 1</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">bean</font> <font color="#2040a0">id=</font><font color="#008000">&quot;emailer&quot;</font> <font color="#2040a0">class=</font><font color="#008000">&quot;com.piifinder.server.email.Emailer&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line2"> 2</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">constructor-arg</font> <font color="#2040a0">index=</font><font color="#008000">&quot;0&quot;</font> <font color="#2040a0">ref=</font><font color="#008000">&quot;jst&quot;</font><font color="#2040a0">/</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line3"> 3</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">constructor-arg</font> <font color="#2040a0">index=</font><font color="#008000">&quot;1&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line4"> 4</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">props</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line5"> 5</a>         mail.host=smtp.yourdomain.com
+<a name="line6"> 6</a>         mail.user=mailie
+<a name="line7"> 7</a>         mail.port=25
+<a name="line8"> 8</a>         mail.password=this is not safe
+<a name="line9"> 9</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">props</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line10">10</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/constructor-arg</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line11">11</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">constructor-arg</font> <font color="#2040a0">index=</font><font color="#008000">&quot;2&quot;</font> <font color="#2040a0">value=</font><font color="#008000">&quot;no-reply@yourdomain.com&quot;</font><font color="#2040a0">/</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line12">12</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/bean</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line13">13</a>
+<a name="line14">14</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">bean</font> <font color="#2040a0">id=&amp;quot;jst&amp;quot;</font> <font color="#2040a0">class=&amp;quot;jst.spring.JavascriptTemplateBean&amp;quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line15">15</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">property</font> <font color="#2040a0">name=</font><font color="#008000">&quot;resourcePaths&quot;</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line16">16</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">list</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line17">17</a>             <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>/WEB-INF/templates<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line18">18</a>             <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>/javascript<font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/value</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line19">19</a>         <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/list</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line20">20</a>     <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/property</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+<a name="line21">21</a> <font color="#2040a0"><strong><font color="4444FF"><strong>&lt;</strong></font><font color="#2040a0">/bean</font><font color="4444FF"><strong>&gt;</strong></font></strong></font>
+    </blockquote>
+<!--
+<bean id="emailer" class="com.piifinder.server.email.Emailer">
+    <constructor-arg index="0" ref="jst"/>
+    <constructor-arg index="1">
+        <props>
+        mail.host=smtp.yourdomain.com
+        mail.user=mailie
+        mail.port=25
+        mail.password=this is not safe
+        <props>
+    </constructor-arg>
+    <constructor-arg index="2" value="no-reply@yourdomain.com"/>
+</bean>
+
+<bean id=&quot;jst&quot; class=&quot;jst.spring.JavascriptTemplateBean&quot;>
+    <property name="resourcePaths">
+        <list>
+            <value>/WEB-INF/templates</value>
+            <value>/javascript</value>
+        </list>
+    </property>
+</bean>
+
+-->
+
+    <p>
+        To use the emailer it's as simple as the following:
+    </p>
+
+<div align="left" class="java">
+<table border="0" cellpadding="3" cellspacing="0">
+   <tr>
+  <!-- start source code -->
+   <td nowrap="nowrap" valign="top" align="left">
+    <code>
+<font color="#808080">1</font>&nbsp;<font color="#000000">Emailer&nbsp;emailer&nbsp;=&nbsp;...</font><br />
+<font color="#808080">2</font>&nbsp;<font color="#ffffff"></font><br />
+<font color="#808080">3</font>&nbsp;<font color="#000000">emailer.email</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;You&nbsp;should&nbsp;use&nbsp;Jst4J&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;jst4j_is_awesome.jst&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;jst4j_is_awesome_html.jst&#34;&nbsp;</font><font color="#000000">)</font><br />
+<font color="#808080">4</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.to</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;somebody@somewhere.com&#34;</font><font color="#000000">)</font><br />
+<font color="#808080">5</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.bcc</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;secret@somewhere.com&#34;</font><font color="#000000">)</font><br />
+<font color="#808080">6</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.cc</font><font color="#000000">(</font><font color="#2a00ff">&#34;joe@somwhere.com&#34;</font><font color="#000000">)</font><br />
+<font color="#808080">7</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.attach</font><font color="#000000">(&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">File</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;jst4j-1.0.zip&#34;&nbsp;</font><font color="#000000">)&nbsp;)</font><br />
+<font color="#808080">8</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.bind</font><font color="#000000">(&nbsp;</font><font color="#2a00ff">&#34;url&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;http://jst4j.googlecode.com&#34;&nbsp;</font><font color="#000000">)&nbsp;</font><font color="#3f7f5f">//&nbsp;bind&nbsp;a&nbsp;variable&nbsp;into&nbsp;the&nbsp;template</font><br />
+<font color="#808080">9</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">.send</font><font color="#000000">()</font><font color="#000000">;</font></code>
+
+   </td>
+  <!-- end source code -->
+   </tr>
+</table>
+</div>
+<!--
+Emailer emailer = ...
+
+emailer.email( "You should use Jst4J", "jst4j_is_awesome.jst", "jst4j_is_awesome_html.jst" )
+    .to( "somebody@somewhere.com")
+    .bcc( "secret@somewhere.com")
+    .cc("joe@somwhere.com")
+    .attach( new File( "jst4j-1.0.zip" ) )
+    .bind( "url", "http://jst4j.googlecode.com" ) // bind a variable into the template
+    .send();
+-->
+    <p>
+        There are several ways you can call send(), but this is the simplest way to send the
+        email.  This requires Javamail package which is not apart of the jst4j pacakge.
+    </p>
+
+    <h3>The Shell</h3>
+
+    <p>
+        The problem with new tools is always the lack of support in your IDEs.  The biggest
+        problem is lack of debugger support.  While we can always use print outs let's face
+        facts the debugger is much much faster.  While I can't give you a debugger, at least
+        not yet, I can give you the next best thing:  an interactive shell.
+    </p>
+
+    <p>
+        The shell is a command line program that let's you run your templates and see the
+        output of them.  Not only that it also let's you try out scripts just as you would
+        any shell.
+    </p>
+
+    <p>
+        To run the shell just execute <i>jst.shell.Shell</i> as you would any java program,
+        and you'll see something like the following:
+    </p>
+
+    <blockquote class="jst">
+Jst4j Shell version 1.0
+1 &gt;
+    </blockquote>
+
+    <p>
+        You can now simply type any javascript expression.  Here are a couple of examples:
+    </p>
+
+    <blockquote class="jst">
+Jst4j Shell version 1.0
+1 &gt; names = [ 'Jessie', 'Hank', 'Henry', 'Ellen', 'David' ]
+Jessie,Hank,Henry,Ellen,David
+2 &gt; names
+Jessie,Hank,Henry,Ellen,David
+3 &gt; names.filter( function( item ) { return item.indexOf("H") == 0; } )
+Hank,Henry
+4 &gt; names[0]
+Jessie
+5 &gt; hello = "Hello {0} you are using the shell."
+Hello {0} you are using the shell.
+6 &gt; hello.format("Charlie")
+Hello Charlie you are using the shell.
+7 &gt;
+    </blockquote>
+
+    <p>
+        You can pass the jst script load path on the command line doing:
+    </p>
+
+    <blockquote class="jst">
+        java jst.shell.Shell &lt;path to jst directory1&gt; &lt;path to jst directory2&gt;...&lt;path to jst directoryn&gt;
+    </blockquote>
+</body>
+</html>

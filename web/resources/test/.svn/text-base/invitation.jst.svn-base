@@ -1,0 +1,21 @@
+<% var confirmed = [ 'charlie', 'chuck', 'sara', 'ben', 'merrell' ]; %>
+<% var maybe = [ 'matt', 'jill', 'johnny' ]; %>
+<% var no = [ 'huggy', 'ruth', 'ruby', 'janet' ]; %>
+
+<p>
+These people have responded yes:
+</p>
+
+<%= this.render( 'list', { list: confirmed } ) %>
+
+<p>
+These people have responded maybe:
+</p>
+
+<%= this.render( 'list', { list: maybe } ) %>
+
+<p>
+These people have responded no:
+</p>
+
+<%= this.render( 'list', { list: no, template: "<strike>{0}</strike" } ) %>

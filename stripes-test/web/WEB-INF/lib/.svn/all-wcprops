@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/stripes-test/web/WEB-INF/lib
+END
+cos.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/stripes-test/web/WEB-INF/lib/cos.jar
+END
+stripes.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/stripes-test/web/WEB-INF/lib/stripes.jar
+END
+commons-logging.jar
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/stripes-test/web/WEB-INF/lib/commons-logging.jar
+END

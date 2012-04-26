@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AntConfiguration">
+    <defaultAnt bundledAnt="true" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="2" />
+      <properties />
+    </buildFile>
+  </component>
+  <component name="ArtifactManager">
+    <artifact type="exploded-war" build-on-make="true" name="jst4j:jst4j exploded">
+      <output-path>$PROJECT_DIR$/jetty-6.1.5/webapps/root</output-path>
+      <root id="root">
+        <element id="javaee-facet-resources" facet="jst4j/web/jst4j" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="jst4j" />
+            <element id="library" level="project" name="spring" />
+          </element>
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="Rhino" />
+            <element id="library" level="project" name="commons-lang-2.3" />
+            <element id="library" level="project" name="javamail" />
+            <element id="library" level="project" name="log4j-1.2.14" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+    <artifact type="exploded-war" build-on-make="true" name="stripes-test:stripes-test exploded">
+      <output-path>$PROJECT_DIR$/jetty-6.1.5/webapps/stripes-test</output-path>
+      <root id="root">
+        <element id="javaee-facet-resources" facet="stripes-test/web/stripes-test" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="stripes-test" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+  </component>
+  <component name="BuildJarProjectSettings">
+    <option name="BUILD_JARS_ON_MAKE" value="false" />
+  </component>
+  <component name="CodeStyleProjectProfileManger">
+    <option name="PROJECT_PROFILE" />
+    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
+  </component>
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions>
+      <entry name=".+\.(properties|xml|html|dtd|tld)" />
+      <entry name=".+\.(gif|png|jpeg|jpg)" />
+    </resourceExtensions>
+    <wildcardResourcePatterns>
+      <entry name="?*.properties" />
+      <entry name="?*.xml" />
+      <entry name="?*.gif" />
+      <entry name="?*.png" />
+      <entry name="?*.jpeg" />
+      <entry name="?*.jpg" />
+      <entry name="?*.html" />
+      <entry name="?*.dtd" />
+      <entry name="?*.tld" />
+      <entry name="?*.jst" />
+      <entry name="?*.js" />
+      <entry name="?*.wtkx" />
+    </wildcardResourcePatterns>
+    <annotationProcessing enabled="false" useClasspath="true" />
+  </component>
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
+  <component name="DependenciesAnalyzeManager">
+    <option name="myForwardDirection" value="false" />
+  </component>
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="GENERATE_NO_WARNINGS" value="true" />
+    <option name="DEPRECATION" value="false" />
+  </component>
+  <component name="EclipseEmbeddedCompilerSettings">
+    <option name="DEBUGGING_INFO" value="true" />
+    <option name="GENERATE_NO_WARNINGS" value="true" />
+    <option name="DEPRECATION" value="false" />
+    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
+    <option name="MAXIMUM_HEAP_SIZE" value="128" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="PRINT_LINE_NUMBERS" value="false" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+    <option name="OUTPUT_DIRECTORY" />
+  </component>
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="Spring">
+        <modules>
+          <module name="serversidejs">
+            <files>
+              <file url="file://$PROJECT_DIR$/jetty-6.1.5/extras/spring/etc/jetty-spring.xml" />
+              <file url="file://$PROJECT_DIR$/jetty-6.1.5/extras/xbean/src/test/java/org/mortbay/jetty/xbean/xbean.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+      <facet-type id="web">
+        <modules>
+          <module name="serversidejs">
+            <files>
+              <file url="file://$PROJECT_DIR$/jetty-6.1.5/contrib/cometd/demo/src/main/webapp/WEB-INF/web.xml" />
+              <file url="file://$PROJECT_DIR$/jetty-6.1.5/contrib/jetty-ant-demo/webapp/WEB-INF/web.xml" />
+              <file url="file://$PROJECT_DIR$/jetty-6.1.5/contrib/jetty-ant-demo/webapp2/WEB-INF/web.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
+  <component name="IdProvider" IDEtalkID="9A10BD214E95764A8B9AD751D72B681A" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" />
+    <option name="OPTION_SCOPE" value="protected" />
+    <option name="OPTION_HIERARCHY" value="true" />
+    <option name="OPTION_NAVIGATOR" value="true" />
+    <option name="OPTION_INDEX" value="true" />
+    <option name="OPTION_SEPARATE_INDEX" value="true" />
+    <option name="OPTION_DOCUMENT_TAG_USE" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_AUTHOR" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_VERSION" value="false" />
+    <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="true" />
+    <option name="OPTION_DEPRECATED_LIST" value="true" />
+    <option name="OTHER_OPTIONS" value="" />
+    <option name="HEAP_SIZE" />
+    <option name="LOCALE" />
+    <option name="OPEN_IN_BROWSER" value="true" />
+  </component>
+  <component name="LogConsolePreferences">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="Palette2">
+    <group name="Swing">
+      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
+      </item>
+      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
+        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
+        <initial-values>
+          <property name="text" value="Button" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="RadioButton" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="CheckBox" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
+        <initial-values>
+          <property name="text" value="Label" />
+        </initial-values>
+      </item>
+      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+          <preferred-size width="150" height="-1" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+          <preferred-size width="150" height="50" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+          <preferred-size width="200" height="200" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+      </item>
+      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
+      </item>
+      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
+          <preferred-size width="-1" height="20" />
+        </default-constraints>
+      </item>
+      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
+      </item>
+      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
+      </item>
+    </group>
+  </component>
+  <component name="ProjectDetails">
+    <option name="projectName" value="serversidejs" />
+  </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="charlie">
+      <words>
+        <w>args</w>
+        <w>javascript</w>
+        <w>scriptable</w>
+        <w>scriptlet</w>
+        <w>scriptlets</w>
+      </words>
+    </dictionary>
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jst4j.iml" filepath="$PROJECT_DIR$/jst4j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stripes-test/stripes-test.iml" filepath="$PROJECT_DIR$/stripes-test/stripes-test.iml" />
+    </modules>
+  </component>
+  <component name="ProjectResources">
+    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+  <component name="ResourceManagerContainer">
+    <option name="myResourceBundles">
+      <value>
+        <list size="0" />
+      </value>
+    </option>
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://jst4j.googlecode.com/svn/branches">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://jst4j.googlecode.com/svn/tags">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://jst4j.googlecode.com/svn/branches" />
+                  <option value="https://jst4j.googlecode.com/svn/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://jst4j.googlecode.com/svn/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="myVersion" value="123" />
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="svn" />
+  </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <component name="com.intellij.jsf.UserDefinedFacesConfigs">
+    <option name="USER_DEFINED_CONFIGS">
+      <value>
+        <list size="0" />
+      </value>
+    </option>
+  </component>
+  <component name="libraryTable">
+    <library name="commons-lang-2.3">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.3.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javamail">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Jetty">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.1/core-3.1.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/jasper-runtime-5.5.15.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/jasper-compiler-5.5.15.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/xmlParserAPIs-2.6.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/jasper-compiler-jdt-5.5.15.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/jsp-api-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.1/jsp-api-2.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.1/ant-1.6.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/jcl104-over-slf4j-1.3.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/xercesImpl-2.6.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jetty-6.1.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/slf4j-simple-1.3.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/slf4j-api-1.3.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.1/jsp-2.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jetty-util-6.1.5.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/jsp-2.0/commons-el-1.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/start.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$USER_HOME$/lib/jetty-6.1.5/modules/jetty/src/main/java" />
+        <root url="file://$USER_HOME$/lib/jetty-6.1.5/modules/util/src/main/java" />
+      </SOURCES>
+    </library>
+    <library name="log4j-1.2.14">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.14.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="pivot">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/pivot-web-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-wtk-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-wtk-terra-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-tools-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-core-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-charts-1.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Rhino">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/js.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="file://$USER_HOME$/lib/rhino1_6R6/javadoc" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="file://$USER_HOME$/lib/rhino1_6R6/src" />
+      </SOURCES>
+    </library>
+    <library name="servlet-api-2.5-6.1.5">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/servlet-api-2.5-6.1.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="spring">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/spring-context.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-web.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
+        <root url="file://$USER_HOME$/lib/spring-framework-2.5.6.SEC01/src" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Stripes">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/commons-logging.jar!/" />
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/cos.jar!/" />
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/stripes.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+  </component>
+</project>
+

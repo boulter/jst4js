@@ -1,0 +1,10 @@
+<@ list, template @>
+<ul>
+<% for( var i = 0; i < list.length; i++ ) { -%>
+    <% if( template ) { -%>
+        <li><%= template.format( list[i] ) %></li>
+    <% } else { %>
+        <li><%= list[i].toString() %></li>
+    <% } -%>
+<% } -%>
+</ul>

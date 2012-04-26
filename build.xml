@@ -1,0 +1,62 @@
+<project name="jst4j" basedir=".">
+
+    <property name="build.dir" value="${basedir}/classes"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="release.dir" value="${basedir}/release"/>
+    <property name="jetty.dir" value="${basedir}/jetty-6.1.5/lib"/>
+    <property name="version" value="1.4"/>
+
+    <path id="libraries">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <fileset dir="${jetty.dir}" includes="servlet-api-*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${build.dir}" includes="**/*"/>
+        </delete>
+        <delete failonerror="false">
+            <fileset dir="${release.dir}" includes="*.jar"/>
+        </delete>
+    </target>
+
+    <target name="build" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" srcdir="${src.dir}" debug="yes">
+            <classpath refid="libraries"/>
+        </javac>
+    </target>
+
+    <target name="package" depends="build">
+        <mkdir dir="${release.dir}"/>
+
+        <jar destfile="${release.dir}/jst4j-${version}.jar">
+            <fileset dir="${src.dir}">
+                <include name="**/*.js"/>
+                <include  name="**/*.jst"/>
+            </fileset>
+            <fileset dir="${build.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="release" depends="package">
+        <zip file="${release.dir}/jst4j-${version}.zip">
+            <fileset dir="${basedir}" includes="Release-Notes.html"/>
+            <fileset dir="${release.dir}" includes="*.jar"/>
+            <fileset dir="${basedir}">
+                <include name="lib/js.jar"/>
+                <include name="lib/log4j*.jar"/>
+                <include name="lib/commons-lang*.jar"/>
+                <include name="doc/**/*"/>
+                <include name="web/**/*"/>
+                <include name="src/**/*"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="all" depends="build,package,release"/>
+
+</project>
