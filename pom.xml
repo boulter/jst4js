@@ -7,20 +7,35 @@
 	<name>JavaScript Templates for Java</name>
 
 	<build>
-	  <sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 
-	  <resources>
-	  <resource>
-	    <directory>src</directory>
-	    <filtering>false</filtering>
-	    <includes>
-	      <include>**/*.js</include>
-	      <include>**/*.jst</include>
-	      </includes>
-	    </resource>
-	  </resources>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.js</include>
+					<include>**/*.jst</include>
+				</includes>
+			</resource>
+		</resources>
 
-	  </build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1-BFL</version>
+				<configuration>
+					<!-- Set the goal to run here, since we override it in deps-root and 
+						we want our children to not have to -->
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
 
 	<dependencies>
 		<dependency>
@@ -59,7 +74,7 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
