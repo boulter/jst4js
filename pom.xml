@@ -6,6 +6,22 @@
 	<version>1.4.0-SNAPSHOT</version>
 	<name>JavaScript Templates for Java</name>
 
+	<build>
+	  <sourceDirectory>src</sourceDirectory>
+
+	  <resources>
+	  <resource>
+	    <directory>src</directory>
+	    <filtering>false</filtering>
+	    <includes>
+	      <include>**/*.js</include>
+	      <include>**/*.jst</include>
+	      </includes>
+	    </resource>
+	  </resources>
+
+	  </build>
+
 	<dependencies>
 		<dependency>
 			<groupId>rhino</groupId>
