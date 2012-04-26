@@ -6,6 +6,11 @@
 	<version>1.4.0-SNAPSHOT</version>
 	<name>JavaScript Templates for Java</name>
 
+	<scm>
+		<connection>scm:git:gitosis@git.aws.bluefinlab.com:jst4j.git</connection>
+		<url>scm:git:https://git.aws.bluefinlab.com/cgit/cgit.cgi/jst4j.git</url>
+	</scm>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 
