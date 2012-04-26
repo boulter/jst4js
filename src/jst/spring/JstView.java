@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import jst.ScriptRuntime;
 import jst.TemplateException;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
-
-import eu.medsea.mimeutil.MimeType;
-import eu.medsea.mimeutil.MimeUtil2;
 
 public class JstView extends AbstractUrlBasedView {
 
@@ -69,20 +67,13 @@ public class JstView extends AbstractUrlBasedView {
 
     if (this.getUrl() == null)
       return result;
-    
-    MimeUtil2 mime = new MimeUtil2();
 
-    String extension = MimeUtil2.getExtension(this.getUrl());
-    
+    String extension = StringUtils.getFilenameExtension(this.getUrl());
+
     if (extension != null && extension.equals("csv"))
       return "text/csv";
-          
-    MimeType type = MimeUtil2.getMostSpecificMimeType(mime.getMimeTypes(this.getUrl()));
 
-    if (type == null || type == MimeUtil2.UNKNOWN_MIME_TYPE)
-      return result;
-
-    return type.toString();
+    return result;
 
   }
 }
