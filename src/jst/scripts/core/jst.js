@@ -67,7 +67,10 @@ String.prototype.xml = function() {
  * with HTML safe characters.
  */
 String.prototype.html = function() {
-    return StringUtil.sanitize(StringUtil.escapeHtml(this));
+
+  return escape(this);
+  // this doesn't seem to be included?
+ // return StringUtil.sanitize(StringUtil.escapeHtml(this));
 };
 
 /**

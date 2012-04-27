@@ -5,17 +5,6 @@
 	<version>1.4.2-SNAPSHOT</version>
 	<name>JavaScript Templates for Java</name>
 
-	<parent>
-		<groupId>com.bluefinlab.common</groupId>
-		<artifactId>dev-root</artifactId>
-		<version>0.1.32</version>
-	</parent>
-
-	<scm>
-		<connection>scm:git:gitosis@git.aws.bluefinlab.com:jst4j.git</connection>
-		<url>scm:git:https://git.aws.bluefinlab.com/cgit/cgit.cgi/jst4j.git</url>
-	</scm>
-
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 
@@ -29,20 +18,6 @@
 				</includes>
 			</resource>
 		</resources>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.1-BFL</version>
-				<configuration>
-					<!-- Set the goal to run here, since we override it in deps-root and 
-						we want our children to not have to -->
-					<goals>deploy</goals>
-				</configuration>
-			</plugin>
-
-		</plugins>
 
 	</build>
 
