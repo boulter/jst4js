@@ -1,3 +1,4 @@
+importPackage( Packages.jst );
 /**
  * This function merges the properties on obj into this object.  It modifies this such that all
  * the properties on the given obj instance will be copied onto this.  If a property by the same
@@ -68,9 +69,7 @@ String.prototype.xml = function() {
  */
 String.prototype.html = function() {
 
-  return escape(this);
-  // this doesn't seem to be included?
- // return StringUtil.sanitize(StringUtil.escapeHtml(this));
+ return StringUtil.sanitize(StringUtil.escapeHtml(this));
 };
 
 /**

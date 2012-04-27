@@ -15,6 +15,8 @@ import org.springframework.web.servlet.view.AbstractUrlBasedView;
 
 public class JstView extends AbstractUrlBasedView {
 
+  private boolean errored;
+  
   private JavascriptTemplateBean templates;
 
   public JstView(String url, JavascriptTemplateBean templates) {
@@ -44,7 +46,9 @@ public class JstView extends AbstractUrlBasedView {
       runtime.addGlobalVariable("response", httpServletResponse);
       runtime.addGlobalVariable("servletContext", getServletContext());
       runtime.addVariable("ex", ex);
-
+      
+      errored = true;
+      
       writeResponse(httpServletResponse, runtime.invoke());
     }
   }
@@ -63,6 +67,9 @@ public class JstView extends AbstractUrlBasedView {
   @Override
   public String getContentType() {
 
+    if (errored)
+      return "text/html";
+    
     String result = super.getContentType();
 
     if (this.getUrl() == null)
